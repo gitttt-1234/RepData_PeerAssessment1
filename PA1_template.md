@@ -36,26 +36,6 @@ Using the ggplot plotting system, the histogram representing the total steps tak
 ```r
 ## Total number of steps in a day
 library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 x <- group_by(dataset,dataset$date)
 total_steps_perday <- summarize(x,sum(steps,na.rm=TRUE))
 names(total_steps_perday) <- c("date","total steps per day")
@@ -94,7 +74,7 @@ ggplot(data = dataset, aes(date,steps)) + geom_histogram(stat = "identity",na.rm
 ## Warning: Removed 2304 rows containing missing values (position_stack).
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![plot of chunk unnamed-chunk-55](figure/unnamed-chunk-55-1.png)
 
 The mean of total number of steps per day is calculated by applying the mean function to the total steps per day variable in the *total_steps_perday* data frame and the result is in **mean_of_totalsteps**.(NAs are ignored)
 
@@ -153,7 +133,7 @@ names(average_steps)<- c("interval","average steps")
 plot(average_steps$interval,average_steps$`average steps`,type="l",main="Time series plot of the average number of steps taken", xlab="5-minute interval",ylab="Average number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![plot of chunk unnamed-chunk-57](figure/unnamed-chunk-57-1.png)
 
 To calculate the 5-minute interval that, on average, contains the maximum number of steps, the *max* function is used, and the result is stored in **interval_max_steps**
 
@@ -217,7 +197,7 @@ ggplot(data = new_dataset,aes(date,steps)) + geom_histogram(stat = "identity",na
 ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![plot of chunk unnamed-chunk-61](figure/unnamed-chunk-61-1.png)
 
 The new_dataset is grouped based on the day and using the summarize function, the total steps taken in a particular day is calculated and the result in stored in *"total_steps_perday_new"*.
 
@@ -338,6 +318,6 @@ names(average_steps_new)<- c("day","interval","average steps")
 ggplot(data = average_steps_new,aes(interval,`average steps`)) + geom_line() + facet_grid(day~.) + ggtitle("Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![plot of chunk unnamed-chunk-65](figure/unnamed-chunk-65-1.png)
 
 It is evident from the plot that there exists variation in pattern when comparing weekend and weekday data. During Weekends, the steps taken is higher. During Weekdays, a peak is observed initially and eventually decreases.
