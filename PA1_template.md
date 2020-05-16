@@ -63,18 +63,14 @@ total_steps_perday
 ```r
 ## Histogram of the total number of steps taken each day
 library(ggplot2)
-ggplot(data = dataset, aes(date,steps)) + geom_histogram(stat = "identity",na.rm = TRUE) + xlab("Days") + ggtitle("Total number of steps taken each day")
+qplot(`total steps per day`,data = total_steps_perday) + xlab("Total steps per day ") + ggtitle("Histogram of Total number of steps taken each day")
 ```
 
 ```
-## Warning: Ignoring unknown parameters: binwidth, bins, pad
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-```
-## Warning: Removed 2304 rows containing missing values (position_stack).
-```
-
-![plot of chunk unnamed-chunk-55](figure/unnamed-chunk-55-1.png)
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
 
 The mean of total number of steps per day is calculated by applying the mean function to the total steps per day variable in the *total_steps_perday* data frame and the result is in **mean_of_totalsteps**.(NAs are ignored)
 
@@ -133,7 +129,7 @@ names(average_steps)<- c("interval","average steps")
 plot(average_steps$interval,average_steps$`average steps`,type="l",main="Time series plot of the average number of steps taken", xlab="5-minute interval",ylab="Average number of steps")
 ```
 
-![plot of chunk unnamed-chunk-57](figure/unnamed-chunk-57-1.png)
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 
 To calculate the 5-minute interval that, on average, contains the maximum number of steps, the *max* function is used, and the result is stored in **interval_max_steps**
 
@@ -186,24 +182,7 @@ new_dataset$steps <- ifelse(is.na(new_dataset$steps),
                             new_dataset$steps)
 ```
 
-A histogram of the total number of steps taken each day is constructed from the new_dataset using the ggplot system.
-
-
-```r
-ggplot(data = new_dataset,aes(date,steps)) + geom_histogram(stat = "identity",na.rm=TRUE) + ggtitle("Total number of steps taken each day after imputing missing values")
-```
-
-```
-## Warning: Ignoring unknown parameters: binwidth, bins, pad
-```
-
-![plot of chunk unnamed-chunk-61](figure/unnamed-chunk-61-1.png)
-
 The new_dataset is grouped based on the day and using the summarize function, the total steps taken in a particular day is calculated and the result in stored in *"total_steps_perday_new"*.
-
-The mean of total number of steps per day is calculated by applying the mean function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_mean_of_totalsteps**.
-
-The median of total number of steps per day is calculated by applying the median function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_median_of_totalsteps**. 
 
 
 ```r
@@ -229,6 +208,26 @@ total_steps_perday_new
 ## 10 2012-10-10                  9900
 ## # ... with 51 more rows
 ```
+
+
+A histogram of the total number of steps taken each day is constructed from the new_dataset using the ggplot system.
+
+
+```r
+qplot(`total steps per day`,data = total_steps_perday_new) + xlab("Total steps per day ") + ggtitle("Histogram of Total number of steps taken each day after imputing")
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
+
+
+The mean of total number of steps per day is calculated by applying the mean function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_mean_of_totalsteps**.
+
+The median of total number of steps per day is calculated by applying the median function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_median_of_totalsteps**. 
+
 
 
 ```r
@@ -318,6 +317,6 @@ names(average_steps_new)<- c("day","interval","average steps")
 ggplot(data = average_steps_new,aes(interval,`average steps`)) + geom_line() + facet_grid(day~.) + ggtitle("Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends")
 ```
 
-![plot of chunk unnamed-chunk-65](figure/unnamed-chunk-65-1.png)
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18-1.png)
 
 It is evident from the plot that there exists variation in pattern when comparing weekend and weekday data. During Weekends, the steps taken is higher. During Weekdays, a peak is observed initially and eventually decreases.

@@ -44,7 +44,7 @@ total_steps_perday
 ```{r}
 ## Histogram of the total number of steps taken each day
 library(ggplot2)
-ggplot(data = dataset, aes(date,steps)) + geom_histogram(stat = "identity",na.rm = TRUE) + xlab("Days") + ggtitle("Total number of steps taken each day")
+qplot(`total steps per day`,data = total_steps_perday) + xlab("Total steps per day ") + ggtitle("Histogram of Total number of steps taken each day")
 
 ```
 
@@ -104,24 +104,30 @@ new_dataset$steps <- ifelse(is.na(new_dataset$steps),
                             new_dataset$steps)
 ```
 
-A histogram of the total number of steps taken each day is constructed from the new_dataset using the ggplot system.
-
-```{r}
-ggplot(data = new_dataset,aes(date,steps)) + geom_histogram(stat = "identity",na.rm=TRUE) + ggtitle("Total number of steps taken each day after imputing missing values")
-```
-
 The new_dataset is grouped based on the day and using the summarize function, the total steps taken in a particular day is calculated and the result in stored in *"total_steps_perday_new"*.
 
-The mean of total number of steps per day is calculated by applying the mean function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_mean_of_totalsteps**.
-
-The median of total number of steps per day is calculated by applying the median function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_median_of_totalsteps**. 
-
 ```{r}
+
 x1 <- group_by(new_dataset,new_dataset$date)
 total_steps_perday_new <- summarize(x1,sum(steps,na.rm=TRUE))
 names(total_steps_perday_new) <- c("date","total steps per day")
 total_steps_perday_new
 ```
+
+
+A histogram of the total number of steps taken each day is constructed from the new_dataset using the ggplot system.
+
+```{r}
+qplot(`total steps per day`,data = total_steps_perday_new) + xlab("Total steps per day ") + ggtitle("Histogram of Total number of steps taken each day after imputing")
+
+
+```
+
+
+The mean of total number of steps per day is calculated by applying the mean function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_mean_of_totalsteps**.
+
+The median of total number of steps per day is calculated by applying the median function to the total steps per day variable in the *total_steps_perday_new* data frame and the result is in **new_median_of_totalsteps**. 
+
 
 ```{r}
 new_mean_of_totalsteps <- ceiling(mean(total_steps_perday_new$`total steps per day`))
